@@ -18,7 +18,7 @@ function isUserSubmitForm () {
 	FM_HttpPost::isSetPost('title') &&
 	FM_HttpPost::isSetPost('diary') &&
 	FM_HttpPost::isSetFile('thumbnailImage') &&
-	FM_HttpPost::isSetFiles('diaryImages') &&
+	FM_HttpPost::isSetFiles('diaryImages');
 	FM_HttpPost::isSetPost('highlight_title_1') &&
 	FM_HttpPost::isSetPost('highlight_text_1') &&
 	FM_HttpPost::isSetFile('highlight_image_1');

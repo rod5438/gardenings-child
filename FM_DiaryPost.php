@@ -59,18 +59,26 @@ class PM_DiaryPost {
 		$imageSrc = wp_get_attachment_image_src($postId);
 		return '<img class="'.$style.'"src="'.$imageSrc[0].'">';
 	}
-	function getHighlightEventsHTML($style) {
+	function getHighlightEventsHTML($style, array $highlightEvents) {
 		$eventsHtml = '';
-		foreach ($this->highlightEvents as $highlightEvent) {
-			$imageSrc = wp_get_attachment_image_src($highlightEvent->image->postId);
-			$eventHtml = 	'<div>
+		foreach ($highlightEvents as $highlightEvent) {
+			$eventsHtml.= $this->getHighlightEventHTML($style, $highlightEvent);
+		}
+		return $eventsHtml;
+	}
+	function getHighlightEventHTML(string $style, FM_HighlightEvent $highlightEvent) {
+		FM_Log(__METHOD__, 'Post key:'.$highlightEvent->image->postkey.' Style:'.$style);
+		if (!$highlightEvent->image->isUploaded()) {
+			return '';
+		}
+		$imageSrc = wp_get_attachment_image_src($highlightEvent->image->postId);
+		$eventHtml =
+		'<div>
 			<p class="" >'.$highlightEvent->title.'</p>
 			<p class="" >'.$highlightEvent->text.'</p>
 			'.$this->getImageHTML($style, $highlightEvent->image).'
-			</div>';
-			$eventsHtml.= $eventHtml;
-		}
-		return $eventsHtml;
+		</div>';
+		return $eventHtml;
 	}
 	private function getCSSContent () {
 		FM_Log(__METHOD__);
@@ -78,27 +86,24 @@ class PM_DiaryPost {
 		$diary_style = 'diary_style';
 		$image_style = 'image_style';
 		$images_container_style = 'images_container_style';
-
-		$title = $_POST['title'];
-		$diary = $_POST['diary'];
 		$content = '<div>
-		<div>
-		<p class="'.$title_style.'">'.$title.'</p>
-		<p class="'.$diary_style.'">'.$diary.'</p>
-		<div class="'.$images_container_style.'">
-		'.$this->getImagesHTML($image_style, $this->diaryImages).'
-		</div>
-		</div>
-		<div>
-		地點頁連結
-		</div>
-		<div>
-		'.$this->getHighlightEventsHTML($image_style).'
-		</div>
-		<div>
-		活動地點資訊
-		</div>
-		</div>';
+						<div>
+							<p class="'.$title_style.'">'.$this->title.'</p>
+							<p class="'.$diary_style.'">'.$this->diary.'</p>
+							<div class="'.$images_container_style.'">
+								'.$this->getImagesHTML($image_style, $this->diaryImages).'
+							</div>
+							</div>
+						<div>
+							地點頁連結
+						</div>
+						<div>
+							'.$this->getHighlightEventsHTML($image_style, $this->highlightEvents).'
+						</div>
+						<div>
+							活動地點資訊
+						</div>
+					</div>';
 		return $content;
 	}
 }
