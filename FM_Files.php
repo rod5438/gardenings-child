@@ -9,7 +9,7 @@ class FM_Files {
 	function FM_Files (string $postkey) {
 		FM_Log(__METHOD__, 'Post key:'.$postkey);
 		$this->postkey = $postkey;
-		$this->rowFiles = FM_HttpPost::inst()->files($postkey);
+		$this->rowFiles = FM_HttpPost::files($postkey);
 		$this->allKeys = array_keys($this->rowFiles);
 		$this->files = $this->getFiles();
 		$this->postIds = array();

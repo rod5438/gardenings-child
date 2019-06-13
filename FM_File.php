@@ -7,7 +7,7 @@ class FM_File {
 	function FM_File ($postkey) {
 		FM_Log(__METHOD__, 'Post key:'.$postkey);
 		$this->postkey = $postkey;
-		$this->file = FM_HttpPost::inst()->file($postkey);
+		$this->file = FM_HttpPost::file($postkey);
 		$this->postId = 0;
 	}
 	function media_handle_upload() {

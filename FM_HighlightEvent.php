@@ -6,8 +6,8 @@ class FM_HighlightEvent {
 	public $link;
 	function FM_HighlightEvent (int $index) {
 		FM_Log(__METHOD__, 'index:'.$index);
-		$this->title = FM_HttpPost::inst()->post('highlight_title_'.$index);
-		$this->text = FM_HttpPost::inst()->post('highlight_text_'.$index);
+		$this->title = FM_HttpPost::post('highlight_title_'.$index);
+		$this->text = FM_HttpPost::post('highlight_text_'.$index);
 		$this->image = new FM_File('highlight_image_'.$index);
 	}
 	function media_handle_upload () {

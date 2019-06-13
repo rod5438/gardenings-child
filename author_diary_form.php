@@ -15,13 +15,13 @@ function getForm () {
 
 function isUserSubmitForm () {
 	$isUserSubmitForm = 
-	FM_HttpPost::inst()->isSetPost('title') &&
-	FM_HttpPost::inst()->isSetPost('diary') &&
-	FM_HttpPost::inst()->isSetFile('thumbnailImage') &&
-	FM_HttpPost::inst()->isSetFiles('diaryImages') &&
-	FM_HttpPost::inst()->isSetPost('highlight_title_1') &&
-	FM_HttpPost::inst()->isSetPost('highlight_text_1') &&
-	FM_HttpPost::inst()->isSetFile('highlight_image_1');
+	FM_HttpPost::isSetPost('title') &&
+	FM_HttpPost::isSetPost('diary') &&
+	FM_HttpPost::isSetFile('thumbnailImage') &&
+	FM_HttpPost::isSetFiles('diaryImages') &&
+	FM_HttpPost::isSetPost('highlight_title_1') &&
+	FM_HttpPost::isSetPost('highlight_text_1') &&
+	FM_HttpPost::isSetFile('highlight_image_1');
 	// wp_verify_nonce( $_POST['my_image_upload_nonce'], 'my_image_upload' );
 	FM_Log(__METHOD__, $isUserSubmitForm == false ? 'It is not user submit form' : 'It is user submit form');
 	return $isUserSubmitForm;
@@ -29,7 +29,7 @@ function isUserSubmitForm () {
 
 if (isUserSubmitForm()) {
 	$diaryPost = new PM_DiaryPost();
-	$diaryPost->title = FM_HttpPost::inst()->post('title');
+	$diaryPost->title = FM_HttpPost::post('title');
 	$diaryPost->thumbnailImage = new FM_File('thumbnailImage');
 	$diaryPost->diaryImages = new FM_Files('diaryImages');
 	$diaryPost->highlightEvents = FM_HighlightEvent::getHighlightEvents();
