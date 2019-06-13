@@ -36,73 +36,82 @@ class PM_DiaryPost {
 			FM_Log(__METHOD__, 'Set post thumbnail NG:'.$this->thumbnailImage->postId);
 		}
 	}
-	function getImagesHTML(string $style, FM_Files $files) : string {
+	function getImagesHTML(FM_Files $files) : string {
 		FM_Log(__METHOD__, 'Post key:'.$files->postkey);
 		if (!$files->isUploaded()) {
 			return '';
 		}
 		$imagesHTML = '';
 		foreach ($files->postIds as $postId) {
-			$imagesHTML .= $this->getImgHTML($style, $postId);
+			$imagesHTML .= $this->getImgHTML($postId);
 		}
 		return $imagesHTML;
 	}
-	function getImageHTML(string $style, FM_File $file) : string {
+	function getImageHTML(FM_File $file) : string {
 		FM_Log(__METHOD__, 'Post key:'.$file->postkey);
 		if (!$file->isUploaded()) {
 			return '';
 		}
-		return $this->getImgHTML($style, $file->postId);
+		return $this->getImgHTML($file->postId);
 	}
-	function getImgHTML(string $style, string $postId) : string {
-		FM_Log(__METHOD__, 'Post id:'.$postId.' Style:'.$style);
+	function getImgHTML(string $postId) : string {
+		FM_Log(__METHOD__, 'Post id:'.$postId);
 		$imageSrc = wp_get_attachment_image_src($postId);
-		return '<img class="'.$style.'"src="'.$imageSrc[0].'">';
+		return '<div>
+					<img src="'.$imageSrc[0].'">
+				</div>';
 	}
-	function getHighlightEventsHTML($style, array $highlightEvents) {
+	function getHighlightEventsHTML(string $style, array $highlightEvents) {
 		$eventsHtml = '';
 		foreach ($highlightEvents as $highlightEvent) {
-			$eventsHtml.= $this->getHighlightEventHTML($style, $highlightEvent);
+			$eventsHtml.=
+				'<section'.(strlen($style) == 0 ? ('') : (' style="'.$style).'"').'>'
+					.$this->getHighlightEventHTML($highlightEvent).
+				'</section>';
 		}
 		return $eventsHtml;
 	}
-	function getHighlightEventHTML(string $style, FM_HighlightEvent $highlightEvent) {
-		FM_Log(__METHOD__, 'Post key:'.$highlightEvent->image->postkey.' Style:'.$style);
+	function getHighlightEventHTML(FM_HighlightEvent $highlightEvent) {
+		FM_Log(__METHOD__, 'Post key:'.$highlightEvent->image->postkey);
 		if (!$highlightEvent->image->isUploaded()) {
 			return '';
 		}
 		$imageSrc = wp_get_attachment_image_src($highlightEvent->image->postId);
 		$eventHtml =
 		'<div>
-			<p class="" >'.$highlightEvent->title.'</p>
-			<p class="" >'.$highlightEvent->text.'</p>
-			'.$this->getImageHTML($style, $highlightEvent->image).'
+			<h3>'.$highlightEvent->title.'</h3>
+			<p>'.$highlightEvent->text.'</p>
+			'.$this->getImageHTML($highlightEvent->image).'
 		</div>';
 		return $eventHtml;
 	}
 	private function getCSSContent () {
 		FM_Log(__METHOD__);
-		$title_style = 'title_style';
-		$diary_style = 'diary_style';
-		$image_style = 'image_style';
-		$images_container_style = 'images_container_style';
+		$title_style = 'fm-diary-title';
+		$diary_style = 'fm-diary-text';
+		$block_style = 'fm-empty-block';
+		$images_container_style = 'fm-diary-images-container';
+		$highlight_event_container_style = 'fm-highlight-event-container';
+		$section_style = 'fm-diary-section';
 		$content = '<div>
-						<div>
-							<p class="'.$title_style.'">'.$this->title.'</p>
-							<p class="'.$diary_style.'">'.$this->diary.'</p>
+						<section>
+							十全十美班長
+						</section>
+						<section style="'.$section_style.'">
+							<h2 class="'.$title_style.'">'.$this->title.'</h2>
+							<div class="'.$block_style.'"></div>
+							<div class="'.$diary_style.'">'.$this->diary.'</div>
 							<div class="'.$images_container_style.'">
-								'.$this->getImagesHTML($image_style, $this->diaryImages).'
+								'.$this->getImagesHTML($this->diaryImages).'
 							</div>
-							</div>
-						<div>
+						</section>
+						<section>
 							地點頁連結
-						</div>
-						<div>
-							'.$this->getHighlightEventsHTML($image_style, $this->highlightEvents).'
-						</div>
-						<div>
+						</section>
+						'.$this->getHighlightEventsHTML($highlight_event_container_style, $this->highlightEvents).'
+						<section>
 							活動地點資訊
-						</div>
+						</section>
 					</div>';
 		return $content;
 	}

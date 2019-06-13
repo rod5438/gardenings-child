@@ -30,6 +30,7 @@ function isUserSubmitForm () {
 if (isUserSubmitForm()) {
 	$diaryPost = new PM_DiaryPost();
 	$diaryPost->title = FM_HttpPost::post('title');
+	$diaryPost->diary = FM_HttpPost::post('diary');
 	$diaryPost->thumbnailImage = new FM_File('thumbnailImage');
 	$diaryPost->diaryImages = new FM_Files('diaryImages');
 	$diaryPost->highlightEvents = FM_HighlightEvent::getHighlightEvents();
