@@ -65,7 +65,7 @@ class PM_DiaryPost {
 		$eventsHtml = '';
 		foreach ($highlightEvents as $highlightEvent) {
 			$eventsHtml.=
-				'<section'.(strlen($style) == 0 ? ('') : (' style="'.$style).'"').'>'
+				'<section'.(strlen($style) == 0 ? ('') : (' class="'.$style).'"').'>'
 					.$this->getHighlightEventHTML($highlightEvent).
 				'</section>';
 		}
@@ -95,22 +95,31 @@ class PM_DiaryPost {
 		$section_style = 'fm-diary-section';
 		$content = '<div>
 						<section>
-							十全十美班長
+							<div>
+								十全十美班長
+							</div>
 						</section>
-						<section style="'.$section_style.'">
-							<h2 class="'.$title_style.'">'.$this->title.'</h2>
-							<div class="'.$block_style.'"></div>
-							<div class="'.$diary_style.'">'.$this->diary.'</div>
-							<div class="'.$images_container_style.'">
-								'.$this->getImagesHTML($this->diaryImages).'
+						<section class="'.$section_style.'">
+							<div></div>
+							<div>
+								<h2 class="'.$title_style.'">'.$this->title.'</h2>
+								<div class="'.$block_style.'"></div>
+								<div class="'.$diary_style.'">'.$this->diary.'</div>
+								<div class="'.$images_container_style.'">'.$this->getImagesHTML($this->diaryImages).'</div>
 							</div>
 						</section>
 						<section>
-							地點頁連結
+							<div>
+								地點頁連結
+							</div>
 						</section>
-						'.$this->getHighlightEventsHTML($highlight_event_container_style, $this->highlightEvents).'
+							<div>
+								'.$this->getHighlightEventsHTML($highlight_event_container_style, $this->highlightEvents).'
+							</div>
 						<section>
-							活動地點資訊
+							<div>
+								活動地點資訊
+							</div>
 						</section>
 					</div>';
 		return $content;
