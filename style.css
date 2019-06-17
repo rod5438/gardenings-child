@@ -121,3 +121,122 @@ Updated: 2019-06-06 11:54:25
   	left: 50%;
   	transform: translate(-50%, -50%);
 }
+
+.fm-highlight-event-section {
+
+}
+
+.fm-highlight-event-section > div {
+	padding-top: 80px;
+}
+
+.fm-highlight-event-section > div > div {
+	display: flex;
+	flex-flow: row wrap;
+	justify-content: space-between;
+	box-sizing: border-box;
+	width: 100%;
+}
+
+.fm-highlight-event-section > div > div:nth-of-type(even) > div:nth-child(1) {
+	-webkit-order: 2; /* Code for Safari 6.1 to 8.0 */
+	order: 2;
+}
+
+.fm-highlight-event-section > div > div:nth-of-type(even) > div:nth-child(2) {
+	-webkit-order: 1; /* Code for Safari 6.1 to 8.0 */
+	order: 1;
+}
+
+.fm-highlight-event-section > div > div:nth-of-type(odd) > div:nth-child(2) {
+	box-shadow: 10px 10px 20px 0px rgba(0,0,0,0.12);
+}
+
+.fm-highlight-event-section > div > div:nth-of-type(even) > div:nth-child(2) {
+	box-shadow: -10px 10px 20px 0px rgba(0,0,0,0.12);
+}
+
+.fm-highlight-event-section > div > div > div:nth-child(1) {
+	flex: none;
+	width: 46%;
+	height: 334px;
+}
+
+.fm-highlight-event-section > div > div > div:nth-child(2) {
+	position: relative;
+	flex: none;
+	box-sizing: border-box;
+	width: 46%;
+	overflow: hidden;
+	vertical-align: middle;
+	color: #040404;
+	padding: 10px 10px 10px 10px;
+	height: 267px;
+}
+
+.fm-highlight-event-section > div > div > div:nth-child(1) > h3 {
+	color: #8daca6 !important;
+	font-size: 36px !important;
+	line-height: 1 !important;
+	box-sizing: border-box;
+	font-family: 微軟正黑體 !important;
+	margin-bottom: 20px !important;
+}
+
+.fm-highlight-event-section > div > div > div:nth-child(1) > div:nth-child(2) {
+	box-sizing: border-box;
+	max-height: 112px;
+	margin-bottom: 20px;
+	overflow: hidden;
+}
+
+.fm-highlight-event-section > div > div > div:nth-child(1) > div:nth-child(2) > p {
+	font-family: "Roboto", 微軟正黑體;
+	color: #7a7a7a;
+	font-weight: 400;
+	font-size: 18px;
+	line-height: 1.6;
+	text-overflow: ellipsis;
+	overflow: hidden;
+}
+
+.fm-highlight-event-section > div > div > div:nth-child(1) > div:nth-child(3) {
+	box-sizing: content-box;
+}
+
+.fm-highlight-event-section > div > div > div:nth-child(1) > div:nth-child(3) > a {
+	font-family: "Playfair Display", 微軟正黑體;
+	font-size: 16px;
+	color: #ffffff;
+	background-color: #e4bc36;
+	padding: 15px 30px;
+	box-sizing: content-box;
+}
+
+/* image with div*/
+.fm-highlight-event-section > div > div > div:nth-child(2) > div {
+	position: relative;
+	width: 100%;
+	height: 100%;
+	overflow: hidden;
+}
+
+/* workaround remove p. I don't know why we have p here */
+.fm-highlight-event-section > div > div > p {
+	position: absolute;
+	display: none;
+}
+
+.fm-highlight-event-section > div > div > div:nth-child(2) > div > img {
+	position: absolute;
+	margin: 0;
+	cursor: pointer;
+ 	min-width:100%;
+ 	min-height:100%;
+	width: auto;
+	height: auto;
+	top: 50%;
+  	left: 50%;
+  	transform: translate(-50%, -50%);
+}
+

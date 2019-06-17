@@ -61,15 +61,27 @@ class PM_DiaryPost {
 					<img src="'.$imageSrc[0].'">
 				</div>';
 	}
-	function getHighlightEventsHTML(string $style, array $highlightEvents) {
-		$eventsHtml = '';
+	function getHighlightEventsHTML(array $highlightEvents) {
+		$eventsHtml = '<div>';
 		foreach ($highlightEvents as $highlightEvent) {
-			$eventsHtml.=
-				'<section'.(strlen($style) == 0 ? ('') : (' class="'.$style).'"').'>'
-					.$this->getHighlightEventHTML($highlightEvent).
-				'</section>';
+			$eventsHtml.= $this->getHighlightEventHTML($highlightEvent);
 		}
+		$eventsHtml.='</div>';
 		return $eventsHtml;
+	}
+	function getTitleTextLinkHTML (FM_HighlightEvent $highlightEvent) {
+		$html = 
+			'<div>
+				<h3>'.$highlightEvent->title.'</h3>
+				<div>
+					<p>'.$highlightEvent->text.'</p>
+				</div>
+				<div>
+					<a href="https://kids-career.com.tw/author_diary/" role="button"><span>Read More</span></a>
+				</div>
+			</div>';
+
+		return $html;
 	}
 	function getHighlightEventHTML(FM_HighlightEvent $highlightEvent) {
 		FM_Log(__METHOD__, 'Post key:'.$highlightEvent->image->postkey);
@@ -77,13 +89,15 @@ class PM_DiaryPost {
 			return '';
 		}
 		$imageSrc = wp_get_attachment_image_src($highlightEvent->image->postId);
-		$eventHtml =
+		$html =
 		'<div>
-			<h3>'.$highlightEvent->title.'</h3>
-			<p>'.$highlightEvent->text.'</p>
-			'.$this->getImageHTML($highlightEvent->image).'
+		    '.$this->getTitleTextLinkHTML($highlightEvent).'
+		    <div>
+				'.$this->getImageHTML($highlightEvent->image).'
+			</div>
 		</div>';
-		return $eventHtml;
+		return $html;
+
 	}
 	private function getCSSContent () {
 		FM_Log(__METHOD__);
@@ -91,7 +105,7 @@ class PM_DiaryPost {
 		$diary_style = 'fm-diary-text';
 		$block_style = 'fm-empty-block';
 		$images_container_style = 'fm-diary-images-container';
-		$highlight_event_container_style = 'fm-highlight-event-container';
+		$highlight_event_section_style = 'fm-highlight-event-section';
 		$section_style = 'fm-diary-section';
 		$content = '<div>
 						<section>
@@ -99,6 +113,7 @@ class PM_DiaryPost {
 								十全十美班長
 							</div>
 						</section>
+
 						<section class="'.$section_style.'">
 							<div></div>
 							<div>
@@ -108,14 +123,15 @@ class PM_DiaryPost {
 								<div class="'.$images_container_style.'">'.$this->getImagesHTML($this->diaryImages).'</div>
 							</div>
 						</section>
+
 						<section>
 							<div>
 								地點頁連結
 							</div>
 						</section>
-							<div>
-								'.$this->getHighlightEventsHTML($highlight_event_container_style, $this->highlightEvents).'
-							</div>
+						<section class="'.$highlight_event_section_style.'">
+							'.$this->getHighlightEventsHTML($this->highlightEvents).'
+						</section>
 						<section>
 							<div>
 								活動地點資訊
