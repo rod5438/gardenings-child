@@ -21,18 +21,4 @@ if ( !function_exists( 'chld_thm_cfg_parent_css' ) ):
 endif;
 add_action( 'wp_enqueue_scripts', 'chld_thm_cfg_parent_css', 10 );
 
-require_once('FM_Log.php');
-require_once('FM_HttpPost.php');
-require_once('FM_File.php');
-require_once('FM_Files.php');
-require_once('FM_File.php');
-require_once('FM_DiaryPost.php');
-require_once('FM_HighlightEvent.php');
-
-function require_once_for_media_handle_upload() {
-	require_once( ABSPATH . 'wp-admin/includes/image.php' );
-	require_once( ABSPATH . 'wp-admin/includes/file.php' );
-	require_once( ABSPATH . 'wp-admin/includes/media.php' );
-}
-
 // END ENQUEUE PARENT ACTION
